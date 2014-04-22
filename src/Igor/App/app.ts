@@ -7,32 +7,70 @@
         deploymentMessage?: string;
         swapStatus?: string;
     }
+
     export interface DeploymentDto {
         message: string;
         time: string;
     }
+
     export interface SwapResultDto {
         operationId: string;
     }
+
     export interface OperationStatusDto {
         status: string;
     }
+
     export interface DtoCollection<T> {
         items: T[];
     }
+
     export interface IAlert {
         type: string;
         message: string;
         closeable?: boolean;
     }
+
+    export class AuthService {
+        userName: string;
+        password: string;
+
+        setCredentials(userName: string, password: string) {
+            this.userName = userName;
+            this.password = password;
+        }
+    }
+
+    export class LoginCtrl {
+        userName: string;
+        password: string;
+        message: string;
+        constructor($scope: any, private $http: ng.IHttpService, private $modalInstance: ng.ui.bootstrap.IModalServiceInstance, private auth: AuthService) {
+            $scope.loginCtrl = this;
+        }
+
+        login() {
+            this.auth.setCredentials(this.userName, this.password);
+            this.$http.get("/login")
+                .success((dto) => {
+                    if (dto.success) {
+                        this.$modalInstance.close(true);
+                    }
+                })
+                .error(() => {
+                    this.message = "Login failed.";
+                });
+        }
+    }
+
     export class MainCtrl {
-        public title = "Igor";
-        public sites: WebSiteDto[];
-        public alerts: IAlert[];
-        public runningOperations: number = 0;
-        
-        constructor(private $http: ng.IHttpService, private $timeout: ng.ITimeoutService, private $window: ng.IWindowService) {
-            this.loadWebsites();
+        title = "Igor";
+        sites: WebSiteDto[];
+        alerts: IAlert[];
+        runningOperations: number = 0;
+
+        constructor(private $http: ng.IHttpService, private $timeout: ng.ITimeoutService, private $window: ng.IWindowService, private $modal: ng.ui.bootstrap.IModalService) {
+            this.login();
         }
 
         loadWebsites() {
@@ -111,10 +149,39 @@
                 });
         }
 
+        login() {
+            this.$modal.open({
+                controller: LoginCtrl,
+                templateUrl: "/html/login.html",
+                backdrop: "static",
+                keyboard: false
+            }).result.then(
+                (success: boolean) => {
+                    if (success) {
+                        this.loadWebsites();
+                    }
+                });
+        }
+
         public closeAlert(index: number) {
             this.alerts.removeAt(index);
         }
     }
 
-    angular.module("igor", ["ui.bootstrap","ui.grid"]);
+    function authInterceptor(auth: AuthService) {
+        return {
+            request: (config) => {
+                config.headers["Authorization"] = "User=" + auth.userName + ";Password=" + encodeURIComponent(auth.password);
+                return config;
+            }
+        };
+    }
+
+    angular.module("igor", ["ui.bootstrap", "ui.grid"])
+        .service("auth", AuthService)
+        .config([
+            "$httpProvider", ($httpProvider: ng.IHttpProvider) => {
+                $httpProvider.interceptors.push(["auth", authInterceptor]);
+            }
+        ]);
 }

@@ -20,7 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +47,15 @@
       <HintPath>..\packages\Fix.AspNet.0.6.0.50049\lib\net45\Fix.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -59,11 +68,29 @@
     <Reference Include="Microsoft.WindowsAzure.Common.NetFramework">
       <HintPath>..\packages\Microsoft.WindowsAzure.Common.1.0.0\lib\net45\Microsoft.WindowsAzure.Common.NetFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Management.WebSites">
       <HintPath>..\packages\Microsoft.WindowsAzure.Management.WebSites.1.0.1\lib\net40\Microsoft.WindowsAzure.Management.WebSites.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=3.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.3.0.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Owin.HttpsOnly">
+      <HintPath>..\packages\Simple.Owin.HttpsOnly.0.2.0.51923\lib\net45\Simple.Owin.HttpsOnly.dll</HintPath>
     </Reference>
     <Reference Include="Simple.Owin.Static">
       <HintPath>..\packages\Simple.Owin.Static.0.2.0.52002\lib\net45\Simple.Owin.Static.dll</HintPath>
@@ -77,6 +104,10 @@
     <Reference Include="Simple.Web.JsonNet">
       <HintPath>..\packages\Simple.Web.JsonNet.0.11.2.51750\lib\net40\Simple.Web.JsonNet.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.Web.Ninject">
+      <HintPath>..\packages\Simple.Web.NInject.0.11.2.51750\lib\net40\Simple.Web.Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions">
@@ -86,6 +117,9 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -108,6 +142,7 @@
     <Content Include="Content\bootstrap.yeti.min.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\ui-grid.css" />
+    <Content Include="html\login.html" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="scripts\angular.js" />
@@ -136,23 +171,31 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientHelper.cs" />
-    <Compile Include="DeploymentDto.cs" />
-    <Compile Include="DtoCollection.cs" />
+    <Compile Include="AuthenticationProvider.cs" />
+    <Compile Include="Helpers\ClientHelper.cs" />
+    <Compile Include="Helpers\ConnectionStringParser.cs" />
+    <Compile Include="Models\DeploymentDto.cs" />
+    <Compile Include="Models\DtoCollection.cs" />
     <Compile Include="GetDeployment.cs" />
     <Compile Include="GetOperationStatus.cs" />
     <Compile Include="GetWebSites.cs" />
-    <Compile Include="IClientHelper.cs" />
-    <Compile Include="ISettingsHelper.cs" />
+    <Compile Include="Helpers\IClientHelper.cs" />
+    <Compile Include="Helpers\ISettingsHelper.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Models\LoginResultDto.cs" />
+    <Compile Include="Models\OperationStatusDto.cs" />
     <Compile Include="OwinAppSetup.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsHelper.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
+    <Compile Include="Startup\NinjectStartup.cs" />
     <Compile Include="Swap.cs" />
-    <Compile Include="SwapResultDto.cs" />
-    <Compile Include="WebSiteDto.cs" />
+    <Compile Include="Models\SwapResultDto.cs" />
+    <Compile Include="Models\WebSiteDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\app.ts" />
+    <TypeScriptCompile Include="scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-mocks.d.ts" />
@@ -164,9 +207,7 @@
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\sugar\sugar.d.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -195,7 +236,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>8531</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

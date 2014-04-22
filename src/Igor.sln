@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igor", "Igor\Igor.csproj", "{AD4F7D79-F803-4D95-AFD9-9635BF83565D}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Igor.Azure", "Igor.Azure\Igor.Azure.ccproj", "{1F121F55-C86D-4E15-A6D2-9338C0AB6C14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AD4F7D79-F803-4D95-AFD9-9635BF83565D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD4F7D79-F803-4D95-AFD9-9635BF83565D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD4F7D79-F803-4D95-AFD9-9635BF83565D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F121F55-C86D-4E15-A6D2-9338C0AB6C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F121F55-C86D-4E15-A6D2-9338C0AB6C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F121F55-C86D-4E15-A6D2-9338C0AB6C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F121F55-C86D-4E15-A6D2-9338C0AB6C14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

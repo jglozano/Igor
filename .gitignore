@@ -10,6 +10,7 @@ deploy
 *ReSharper*
 *.swp
 *.testsettings
+*.DotSettings
 TestResults/*
 *.dbmdl
 Releases/2*
@@ -26,3 +27,10 @@ NDependOut
 localConfig
 src/packages
 nohup.out
+src/Igor.Azure/csx
+src/Igor.Azure/rcf
+src/Igor.Azure/Profiles
+src/Igor.Azure/ServiceConfiguration.Cloud.cscfg
+src/Igor.Azure/ServiceConfiguration.Local.cscfg
+src/Igor.Azure/ServiceDefinition.csdef
+src/Igor/scripts

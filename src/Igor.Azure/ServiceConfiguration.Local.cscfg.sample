@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Igor.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-01.2.3">
+  <Role name="Igor">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="WebSites" value="comma,separated,list,of,websites,to,include" />
+      <Setting name="SubscriptionId" value="Azure Subscription ID" />
+      <Setting name="ManagementCertificate" value="Management Certificate Base64 string from pubSettings.xml file" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
