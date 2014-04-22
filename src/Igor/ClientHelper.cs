@@ -53,7 +53,7 @@
                 ValidateSettings(dict);
                 _subscriptionId = dict["SubscriptionId"];
                 var certificateBytes = Convert.FromBase64String(dict["ManagementCertificate"]);
-                _certificate = new X509Certificate2(certificateBytes, "", X509KeyStorageFlags.MachineKeySet);
+                _certificate = new X509Certificate2(certificateBytes, "", X509KeyStorageFlags.UserKeySet);
                 _userName = dict["UserName"];
                 _password = dict["Password"];
             }
