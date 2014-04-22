@@ -21,22 +21,30 @@
         public async Task<Status> Get()
         {
             var sites = new SettingsHelper().GetSites().ToList();
+            Trace.WriteLine("Sites: " + string.Join(", ", sites));
             var siteSet = new HashSet<string>(sites.Concat(sites.Select(s => s + "(staging)")), StringComparer.OrdinalIgnoreCase);
 
-            var client = new ClientHelper().GetWebSiteClient();
             WebSpacesListResponse spaces;
             try
             {
+                var client = new ClientHelper().GetWebSiteClient();
                 spaces = await client.WebSpaces.ListAsync(CancellationToken.None);
             }
             catch (Exception ex)
             {
-                Trace.TraceError(ex.Message);
+                Trace.TraceError(ex.ToString());
                 throw;
             }
-            var siteLists = await Task.WhenAll(spaces.Select(space => ListWebSites(space.Name, siteSet)));
-
-            Output = DtoCollection.Create(siteLists.SelectMany(l => l).Select(WebSiteDto.FromSdk).OrderBy(dto => dto.Name));
+            try
+            {
+                var siteLists = await Task.WhenAll(spaces.Select(space => ListWebSites(space.Name, siteSet)));
+                Output = DtoCollection.Create(siteLists.SelectMany(l => l).Select(WebSiteDto.FromSdk).OrderBy(dto => dto.Name));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+                throw;
+            }
             return 200;
         }
 
