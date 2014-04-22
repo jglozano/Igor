@@ -63,7 +63,7 @@
                         stream.Write(certificateBytes, 0, certificateBytes.Length);
                     }
                 }
-                _certificate = new X509Certificate2(fileName, "");
+                _certificate = new X509Certificate2(fileName, "YethMarthter");
                 _userName = dict["UserName"];
                 _password = dict["Password"];
             }
