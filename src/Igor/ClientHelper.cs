@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.IO;
     using System.Linq;
     using System.Net.PeerToPeer;
     using System.Security.Cryptography.X509Certificates;
     using System.Security.Policy;
+    using System.Web;
     using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.Management.WebSites;
     using Microsoft.WindowsAzure.WebSitesExtensions;
@@ -53,7 +55,15 @@
                 ValidateSettings(dict);
                 _subscriptionId = dict["SubscriptionId"];
                 var certificateBytes = Convert.FromBase64String(dict["ManagementCertificate"]);
-                _certificate = new X509Certificate2(certificateBytes, "", X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+                var fileName = Path.Combine(AppDomain.CurrentDomain.GetData("DataDirectory").ToString(), "igor.pfx");
+                if (!File.Exists(fileName))
+                {
+                    using (var stream = File.OpenWrite(fileName))
+                    {
+                        stream.Write(certificateBytes, 0, certificateBytes.Length);
+                    }
+                }
+                _certificate = new X509Certificate2(fileName, "");
                 _userName = dict["UserName"];
                 _password = dict["Password"];
             }
