@@ -45,11 +45,13 @@
         userName: string;
         password: string;
         message: string;
+        working: boolean;
         constructor($scope: any, private $http: ng.IHttpService, private $modalInstance: ng.ui.bootstrap.IModalServiceInstance, private auth: AuthService) {
             $scope.loginCtrl = this;
         }
 
         login() {
+            this.working = true;
             this.auth.setCredentials(this.userName, this.password);
             this.$http.get("/login")
                 .success((dto) => {
@@ -59,6 +61,9 @@
                 })
                 .error(() => {
                     this.message = "Login failed.";
+                })
+                .finally(() => {
+                    this.working = false;
                 });
         }
     }
