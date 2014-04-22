@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html ng-app="igor">
+<head>
+    <title>Igor</title>
+    <link href="Content/bootstrap.yeti.min.css" rel="stylesheet" />
+    <link href="Content/ui-grid.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div ng-controller="Igor.MainCtrl as mainCtrl">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <span class="navbar-brand">Igor - <small>by <a href="https://zud.io" style="color: white">Zudio</a></small></span> 
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12 col-sm-offset-0">
+                    <alert ng-repeat="alert in mainCtrl.alerts" type="alert.type">{{alert.message}}</alert>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Site</th>
+                                <th>Web Space</th>
+                                <th>Server Farm</th>
+                                <th>Current deployment <button class="btn btn-xs" ng-click="mainCtrl.loadDeployments()">Refresh</button></th>
+                                <th>Swap Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="site in mainCtrl.sites">
+                                <td ng-bind="site.name"></td>
+                                <td ng-bind="site.webSpace"></td>
+                                <td ng-bind="site.serverFarm"></td>
+                                <td ng-bind="site.deploymentMessage"></td>
+                                <td ng-bind="site.swapStatus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-lg btn-block btn-primary" ng-click="mainCtrl.swap()" ng-disabled="mainCtrl.runningOperations > 0">Swap All</button>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+            </div>
+        </div>
+    </div>
+    <script src="scripts/sugar.min.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="scripts/ui-grid.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
